@@ -1,0 +1,24 @@
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+
+@import "tailwindcss";
+
+
+/* html,body,#root{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    text-align: center;
+   
+  }
+   */
+html {
+    scroll-behavior: smooth;
+}
+body{
+    @apply bg-zinc-900 text-zinc-50 ;
+}
+
+.menu-btn{
+    @apply w-10 h-10 grid place-items-center cursor-pointer bg-zinc-50/10;
+}

@@ -1,0 +1,17 @@
+/* .MainLayout {
+    height: 100%;
+    box-sizing: border-box;
+   
+    grid-template-rows: 15% 80% 5%;
+}
+.MainLayout>header,
+.MainLayout>footer{
+    grid-column: span 6;
+}
+
+ */
+ @import "tailwindcss";
+ @plugin 'tailwind-scrollbar' {
+    nocompatible: true;
+    preferredStrategy: 'pseudoelements';
+}
