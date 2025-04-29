@@ -1,6 +1,7 @@
 import express, {NextFunction,Request,Response} from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import config from './Utils/config';
 
 
 import loginRouter from './Routes/login';
@@ -10,7 +11,12 @@ import ErrorHandler from './MiddleWare/routeNotFound';
 
 
 const server = express();
-const port = 3000;
+const corsOptions = {
+    origin: '*', //allow any origin
+    methods: ['GET', 'POST', 'PUT'], //which methods i will allow
+    allowedHeaders: ['Content-Type', 'Authorization'], //which headers i will get
+    exposedHeaders: ['Authorization', 'Content-Type'], //which headers i will expose
+  };
 
 server.use(cors());
 
@@ -29,6 +35,6 @@ server.use('*',ErrorHandler);
 
 
 
-server.listen(3000, () => {
-    return console.log(`Express is listening at http://localhost:${port}`);
+server.listen(config.webPort, () => {
+    return console.log(`Express Server is listening on http://${config.webHost}:${config.webPort}`);
 });

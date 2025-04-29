@@ -8,3 +8,8 @@ git push -u origin main
 git remote add origin https://github.com/shirlySchwartz-coder/Dev2025.git
 git branch -M main
 git push -u origin main
+
+
+git remote add origin https://github.com/shirlySchwartz-coder/Enter.git
+git commit -m "first commit"
+git push
