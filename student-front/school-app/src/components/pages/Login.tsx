@@ -1,6 +1,9 @@
-import { error } from 'console';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { store } from '../../redux/store';
+import { AuthState, loginAction } from '../../redux/loginReducer';
 
 type userInputs = {
   email: string;
@@ -30,21 +33,37 @@ export function Login() {
       message: `This filed must be ${25} characters or less`,
     },
   };
-  const LOGIN_URL = 'http://localhost:8080/api/v1/login/loginUser';
+  const LOGIN_URL = 'http://localhost:8080/api/v1/login';
 
   const onError = (error: any) => {
     console.log(error);
   };
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = store.getState().login.jwt;
+    if (token.length > 10) {
+      console.log('token in login from store:', token);
+    }
+  }, []);
+
   const onSubmit: SubmitHandler<userInputs> = async (data) => {
     console.log(data);
     console.log(errors);
-    const response = await axios.post('http://localhost:3000/api/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
+    const response = await axios.post(LOGIN_URL, {
+      email: data.email,
+      password: data.password,
+    })
+    .then((response) => {
+      console.log(response.data);
+      const jwt = response.headers['authorization'];
+      console.log('my jwt: ', jwt);
+
+      
+    })
+
+
+
   };
 
   return (

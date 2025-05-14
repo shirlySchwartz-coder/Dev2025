@@ -10,8 +10,6 @@ function Menu() {
           <div className='hidden lg:block text-gray-500 font-light my-4'>
             {menu.title}
           </div>
-          <br />
-          <br />
 
           {menu.items.map((item, index) => (
             <Link
