@@ -2,14 +2,30 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter} from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom';
 import MainLayout from './components/layout/Main/MainLayout';
+import { ToastContainer, Bounce } from 'react-toastify';
+
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <BrowserRouter>
     <MainLayout />
+    <ToastContainer
+      position='top-right'
+      autoClose={2500}
+      hideProgressBar
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme='colored'
+      transition={Bounce}
+    />
   </BrowserRouter>
 );
 

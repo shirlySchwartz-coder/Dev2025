@@ -1,6 +1,8 @@
-import { useForm } from 'react-hook-form';
+import { useForm}  from 'react-hook-form';
 import { UserReg } from '../models/UserReg';
 import { useNavigate } from 'react-router-dom';
+import { useRef } from 'react';
+import { toast, Bounce } from 'react-toastify';
 
 type RegisterForm = {
   id: number;
@@ -13,12 +15,16 @@ type RegisterForm = {
   confirmPassword: string;
 };
 
-export default function register() {
+export function Register() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<RegisterForm>({});
+  
+  const password= useRef({});
+  password.current = watch("password", "");
 
   const fieldNeed = {
     required: true,
@@ -27,28 +33,66 @@ export default function register() {
   };
 
   const ErrRequired = 'This filed is required';
-  const ErrMin = `This filed must contain more than ${fieldNeed.minLength}characters`;
-  const ErrMax = `This filed cant contain more then ${fieldNeed.maxLength}characters`;
+  const ErrMin = `This filed must contain more than ${fieldNeed.minLength} characters`;
+  const ErrMax = `This filed cant contain more then ${fieldNeed.maxLength} characters`;
   const ErrEmail = 'This filed must contain a valid email';
   const ErrPhone = 'This filed must contain a valid phone number';
+  const ErrConfirm = 'The passwords do not match';
 
   const navigate = useNavigate();
+
+  const handleError = (errors: any) => {
+    console.log(errors);
+  };
+
+  const onSend = (data: RegisterForm) => {
+    const userReg: UserReg = {
+      id: 0,
+      userFirstName: data.firstName,
+      userLastName: data.lastName,
+      userPhone: data.phone,
+      userEmail: data.email,
+      userPassword: data.password,
+      role: data.role,
+     
+    };
+    console.log(userReg);
+    fetch('http://localhost:8080/api/v1/login/registerUser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userReg),
+    })
+      .then((response) => {
+        if (response.ok) {
+          toast.success('You are register!', {
+            position: "top-right",
+            autoClose: 2500,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce,
+            });
+
+          navigate('/login');
+        } else {
+          throw new Error('Registration failed');
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+      
+  }
   return (
     <div className='register'>
       <h1>Register</h1>
       <form
-        onSubmit={handleSubmit((data) => {
-          const user = new UserReg(
-            data.id,
-            data.firstName,
-            data.lastName,
-            data.email,
-            data.password,
-            data.role
-          );
-          console.log(user);
-          navigate('/login');
-        })}
+        onSubmit={handleSubmit(onSend, handleError)}
       >
         <div>
           <label htmlFor='firstName'>First Name</label>
@@ -109,7 +153,7 @@ export default function register() {
           <input
             type='password'
             id='confirmPassword'
-            {...register('confirmPassword', { ...fieldNeed, required: true })}
+            {...register('confirmPassword', { ...fieldNeed, required: true})} // Check if the password matches
           />
           {errors.confirmPassword && (
             <p>

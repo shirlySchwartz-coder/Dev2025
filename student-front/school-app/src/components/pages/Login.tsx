@@ -33,13 +33,15 @@ export function Login() {
       message: `This filed must be ${25} characters or less`,
     },
   };
-  const LOGIN_URL = 'http://localhost:8080/api/v1/login';
+
+  const LOGIN_URL = 'http://localhost:8080/api/v1/login/loginUser';
 
   const onError = (error: any) => {
     console.log(error);
   };
   const navigate = useNavigate();
 
+  
   useEffect(() => {
     const token = store.getState().login.jwt;
     if (token.length > 10) {

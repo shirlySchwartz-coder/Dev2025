@@ -5,7 +5,7 @@ export class UserReg {
   public userEmail: string;
   public userPhone?: string;
   public userPassword: string;
-  public role?: string;
+  public role: string;
 
   constructor(
     id: number,
@@ -14,7 +14,7 @@ export class UserReg {
     userEmail: string,
     userPhone: string,
     userPassword: string,
-    role?: string
+    role: string
   ) {
     this.id = id;
     this.userFirstName = userFirstName;

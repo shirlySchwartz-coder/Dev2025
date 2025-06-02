@@ -52,9 +52,9 @@ const menuItems = [
           visible: ['admin', 'teacher', 'student'],
         },
         {
-          icon: '/setting.png',
-          label: 'Settings',
-          href: '/settings',
+          icon: '/register.png',
+          label: 'Register',
+          href: '/register',
           visible: ['admin', 'teacher', 'student'],
         },
         {
