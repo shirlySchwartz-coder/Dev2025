@@ -19,12 +19,16 @@ export interface TodoItem {
 export class AppComponent {
   todoList: TodoItem[] = [];
   newTask: string = '';
+  storedList: TodoItem[] = [];
 
   ngOnInit() {
-    const storedList = localStorage.getItem('todoList');
-    if (storedList) {
-      this.todoList = JSON.parse(storedList);
+    if(localStorage.getItem('todoList')){
+      this.storedList = JSON.parse(localStorage.getItem('todoList') || '');
+      this.todoList = this.storedList;
+      console.log(this.storedList)
     }
+
+
   }
 
   addTodo(task: string) {
